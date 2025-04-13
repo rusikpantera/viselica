@@ -4,11 +4,9 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class HangmanGameLogic {
@@ -19,8 +17,12 @@ public class HangmanGameLogic {
     private int misses;
     private final Set<Character> guessedLetters;
 
-    public HangmanGameLogic() {
-        this.secretWord = getRandomWordFromAPI();
+    public HangmanGameLogic(boolean isEasy) {
+        if (isEasy) {
+            this.secretWord = getEasyWord();
+        } else {
+            this.secretWord = getRandomWordFromAPI();
+        }
         guessedWord = new char[secretWord.length()];
         Arrays.fill(guessedWord, '_');
         misses = 0;
@@ -87,6 +89,15 @@ public class HangmanGameLogic {
 
     public String getSecretWord() {
         return secretWord;
+    }
+
+    private String getEasyWord() {
+        String[] words = {
+                "ручка", "бочка", "шапка", "лампа", "ракета",
+                "вода", "гора", "машина", "корзина", "ручей"
+        };
+        Random random = new Random();
+        return words[random.nextInt(words.length)];
     }
 
     private String getRandomWordFromAPI() {

@@ -25,7 +25,15 @@ public class Main {
     }
 
     private static void startNewGame(Scanner scanner) {
-        HangmanGameLogic game = new HangmanGameLogic();
+        System.out.println("\nВыберите уровень сложности:");
+        System.out.println("1. Лёгкий (встроенный словарь)");
+        System.out.println("2. Сложный (слово через API Wiktionary)");
+        System.out.print("Ваш выбор: ");
+        String diff = scanner.nextLine().trim();
+
+        boolean isEasy = diff.equals("1");
+
+        HangmanGameLogic game = new HangmanGameLogic(isEasy);
         System.out.println("\nНовая игра началась!");
 
         while (!game.isGameOver()) {
