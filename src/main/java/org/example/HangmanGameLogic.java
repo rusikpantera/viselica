@@ -4,9 +4,11 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class HangmanGameLogic {
@@ -88,7 +90,7 @@ public class HangmanGameLogic {
     }
 
     private String getRandomWordFromAPI() {
-        int attempts = 5;
+        int attempts = 100;
 
         while (attempts-- > 0) {
             try {
@@ -124,7 +126,7 @@ public class HangmanGameLogic {
                     JSONObject page = pages.getJSONObject(key);
                     String title = page.getString("title").toLowerCase();
 
-                    if (!title.contains(":") && title.matches("[а-яё]{4,}")) {
+                    if (!title.contains(":") && title.matches("[а-яё]{4,7}$")) {
                         return title;
                     }
                 }
